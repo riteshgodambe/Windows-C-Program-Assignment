@@ -1,0 +1,28 @@
+using System;
+using System.IO;
+
+class Program
+{
+    static string targetFilePath;
+
+    static void Main(string[] args)
+    {
+        Console.WriteLine("Enter the path of the target .txt file:");
+        targetFilePath = Console.ReadLine();
+
+        if (File.Exists(targetFilePath))
+        {
+            Console.WriteLine("File found. Monitoring for changes...");
+            StartMonitoring();
+        }
+        else
+        {
+            Console.WriteLine("File not found. Please check the path and try again.");
+        }
+    }
+
+    static void StartMonitoring()
+    {
+        // Implementation for monitoring the file will go here.
+    }
+}
