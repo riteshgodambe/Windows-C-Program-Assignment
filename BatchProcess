@@ -1,0 +1,49 @@
+using System;
+using System.IO;
+using System.Timers;
+
+class Program
+{
+    static string targetFilePath;
+    static string lastFileContent = string.Empty;
+    static Timer timer;
+
+    static void Main(string[] args)
+    {
+        Console.WriteLine("Enter the path of the target .txt file:");
+        targetFilePath = Console.ReadLine();
+
+        if (File.Exists(targetFilePath))
+        {
+            Console.WriteLine("File found. Monitoring for changes...");
+            lastFileContent = File.ReadAllText(targetFilePath);
+            StartMonitoring();
+        }
+        else
+        {
+            Console.WriteLine("File not found. Please check the path and try again.");
+        }
+    }
+
+    static void StartMonitoring()
+    {
+        timer = new Timer(15000); // 15 seconds
+        timer.Elapsed += CheckForChanges;
+        timer.Start();
+    }
+
+    static void CheckForChanges(object sender, ElapsedEventArgs e)
+    {
+        string currentFileContent = File.ReadAllText(targetFilePath);
+        if (currentFileContent != lastFileContent)
+        {
+            Console.WriteLine("File content has changed.");
+            lastFileContent = currentFileContent;
+            // You can add more detailed reporting here if needed
+        }
+        else
+        {
+            Console.WriteLine("No changes detected.");
+        }
+    }
+}
